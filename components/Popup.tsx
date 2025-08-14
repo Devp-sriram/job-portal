@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import sendJobs from '@/utils/sendJobs'
+
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_blue.css";
+import 'flatpickr/dist/plugins/confirmDate/confirmDate.css';
+import confirmDatePlugin from 'flatpickr/dist/plugins/confirmDate/confirmDate';
 
 type PopupHostProps = {
   onClose: () => void;
@@ -33,22 +39,23 @@ export default function PopupHost({ onClose }: PopupHostProps) {
     e.preventDefault();
     if (validate()) {
       setLoading(true);
-      console.log(formData);
-    {/*if (result.success) {
+      const result = await sendJobs(formData);
+      if (result.success) {
         setFormData({
-          name: "",
-          phone: "",
-          email: "",
+          jobTitle: "",
+          companyName: "",
           location: "",
-          carsCount: 0,
-          message: ""
+          jobType:"",
+          salary: {min:0,max:0}, 
+          deadline:"",
+          description: "", 
         });
 
         setLoading(false); 
       } else {
         setLoading(false);
         console.error('Submission failed:', result.error);
-      }*/}
+      }
     }
   };
 
@@ -171,13 +178,17 @@ export default function PopupHost({ onClose }: PopupHostProps) {
             </label>
             <label>
               Application Deadline
-              <input
-                name="deadline"
-                placeholder=""
-                value={formData.deadline}
-                onChange={handleChange}
-                className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
-              />
+                    <Flatpickr
+                      name="deadline"
+                      placeholder="deadline"
+                      options={{
+                        dateFormat: "D , j M ",
+                        plugins: [confirmDatePlugin({ showAlways: true, theme: "material_blue" })],
+                      }}
+                      value={formData.deadline}
+                      onChange={([date]) => setFormData({ ...formData, deadline: date })}
+                      className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
+                    />
               {errors.deadline && <span className="text-red-300 text-sm">{errors.deadline}</span>}
             </label>
 
@@ -212,16 +223,16 @@ export default function PopupHost({ onClose }: PopupHostProps) {
                 disabled={loading}
                 className={
                   ` relative min-w-36 min-h-12 w-fit flex justify-center items-center gap-2 px-4 py-2 xl:px-6 rounded-lg font-semibold transition-all bg-[#00AAFF] text-white
-                ${loading ? 'cursor-not-allowed' : 'cursor-pointer'} `}
+${loading ? 'cursor-not-allowed' : 'cursor-pointer'} `}
               >
-                      Publish
-                      <Image
-                        src={'/pub.svg'}
-                        alt='v'
-                        width={10}
-                        height={8}
-                        className='absolute top-5 right-7'
-                      />
+                Publish
+                <Image
+                  src={'/pub.svg'}
+                  alt='v'
+                  width={10}
+                  height={8}
+                  className='absolute top-5 right-7'
+                />
               </button>
 
             </div>

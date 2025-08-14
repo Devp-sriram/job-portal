@@ -1,9 +1,13 @@
 'use client'
+
 import Image from 'next/image'
 import { useState , useEffect } from 'react';
 import { Slider } from "@/components/ui/slider"
+import useSWR from 'swr'
+import getJobs from '@/utils/getJobs'
 
 export default function Filter()  {
+  const { data , error , loading , mutate} = useSWR('api/getJob', getJobs);
 
   const [formData , setFormData] = useState({
     title:'',
@@ -23,12 +27,12 @@ export default function Filter()  {
   }
 
   useEffect(()=>{
-    console.log(formData)
-  },[formData])
+    console.log(data)
+  },[formData, data])
 
   return (
     <section className='max-w-[1440px] mx-auto'>
-      <form onSubmit={handleSubmit} className='w-full flex justify-evenly items-center h-24 gap-8'>
+      <form onSubmit={handleSubmit} className='w-full flex justify-evenly items-center h-24 gap-8 border-none'>
         <label className='flex gap-6'>
           <Image 
             src='/search.svg'
@@ -42,7 +46,7 @@ export default function Filter()  {
             placeholder='Search By Job Title, Role'
             value = {formData.title}
             onChange = {handleChange}
-            className='placeholder-[#686868] focus:border-b'
+            className='placeholder-[#686868]'
           />
         </label>
 
@@ -60,7 +64,7 @@ export default function Filter()  {
             value={formData.location}
             onChange={handleChange}
             // list="location-list" // connects to datalist
-            className="placeholder-[#686868] focus:border-b"
+            className="placeholder-[#686868]"
           />
 
           <Image
@@ -93,7 +97,7 @@ export default function Filter()  {
             value={formData.jobType}
             onChange={handleChange}
             // list="location-list" // connects to datalist
-            className="placeholder-[#686868] focus:border-b"
+            className="placeholder-[#686868]"
           />
 
           <Image
