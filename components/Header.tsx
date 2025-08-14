@@ -1,12 +1,12 @@
 'use client'
 import Image from 'next/image'
-import { AppShell , Button } from '@mantine/core';
-
+import { useState } from 'react'
+import Popup from '@/components/Popup'
 
 export default function Header(){
-
+  const [showPopup,setShowPopup] = useState(false)
   return(
-    <AppShell.Header withBorder={false} style={{ display: "flex", justifyContent: "center", alignItems: "center" , padding:'40px 0px',fontWeight: '600' }}>
+    <header style={{ display: "flex", justifyContent: "center", alignItems: "center" , padding:'40px 0px',fontWeight: '600' }}>
       <Image
         src='./logo.svg'
         alt='logo'
@@ -22,14 +22,13 @@ export default function Header(){
         <a href='#'>Testimonials</a>
       </nav>
 
-      <Button 
-        variant='gradient' 
-        radius='50' 
-        gradient={{ from: "#A128FF", to: "#6100AD", deg: 180 }}
-        style ={{fontSize :'16px'}}
+      <button
+        onClick={()=>setShowPopup(true)}
+        className='text-white bg-gradient-to-r from-[#A128FF] to-[#6100AD] rounded-full px-4 p-2'
       >
         Create Jobs
-      </Button>
-    </AppShell.Header>
+      </button>
+      {showPopup && <Popup onClose={()=>setShowPopup(false)}/>}
+    </header>
   )
 }
