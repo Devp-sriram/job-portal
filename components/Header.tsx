@@ -6,7 +6,7 @@ import Popup from '@/components/Popup'
 export default function Header(){
   const [showPopup,setShowPopup] = useState(false)
   return(
-    <header style={{ display: "flex", justifyContent: "center", alignItems: "center" , padding:'40px 0px',fontWeight: '600' }}>
+    <header className='flex justify-between md:justify-center items-center py-10 font-semibold px-2'>
       <Image
         src='./logo.svg'
         alt='logo'
@@ -14,7 +14,7 @@ export default function Header(){
         height = {44} 
       />
 
-      <nav className="flex px-14 gap-14">
+      <nav className="hidden lg:flex px-14 gap-14">
         <a href='#'>Home</a>
         <a href='#'>Find Jobs</a>
         <a href='#'>Find Talents</a>

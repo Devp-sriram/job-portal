@@ -153,7 +153,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
             {/* Cars Count */}
             <label>
               Salary Range
-              <div className='flex gap-4'> 
+              <div className='flex flex-col md:flex-row gap-4'> 
                 <fieldset className='relative'>
                   <Image
                     src='/money.svg'

@@ -88,7 +88,7 @@ export default function Filter()  {
 
   return (
     <section className='max-w-[1440px] mx-auto'>
-      <form onSubmit={handleSubmit} className='w-full flex justify-evenly items-center h-24 gap-8 focus:border-none'>
+      <form onSubmit={handleSubmit} className='w-full flex flex-col md:flex-row justify-evenly items-center min-h-24 gap-8 focus:border-none'>
         <label className='flex gap-6'>
           <Image 
             src='/search.svg'
@@ -191,7 +191,7 @@ export default function Filter()  {
         </label>
       </form>
 
-      <div className='grid grid-cols-4 gap-8 p-8'>
+      <div className='grid gid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 p-8'>
         {filteredJobs?.map((job,i)=> <Card key={job._id || i} data={job}/>)}
       </div>
     </section>
