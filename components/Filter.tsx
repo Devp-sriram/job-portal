@@ -15,7 +15,7 @@ export default function Filter()  {
     title:'',
     location :'',
     jobType :'',
-    salary :{min:0,max:100000}
+    salary :{min:0, max:100000}
   })
   const [filteredJobs, setFilteredJobs] = useState([]);
 
@@ -28,6 +28,29 @@ export default function Filter()  {
     console.log(formData)
 
   }
+
+  const calculateMinMax = () => { 
+    let min = Infinity; 
+    let max = -Infinity; 
+
+    jobs.forEach((job) => { 
+      if (job.salary.min < min) min = job.salary.min; 
+      if (job.salary.max > max) max = job.salary.max; 
+    });
+
+    return { min, max };
+  };
+
+  useEffect(() => {
+    if (!jobs || jobs.length === 0) return;
+
+    const { min , max } = calculateMinMax()  
+    setFormData(prev => ({
+    ...prev,
+    salary: { min, max }
+  }));
+  }, [jobs]);
+
 
   useEffect(()=>{
     console.log(formData)
@@ -150,12 +173,12 @@ export default function Filter()  {
         <label className='flex flex-col gap-4'>
           <div className='flex justify-between font-bold'>
             <h3>Salary Per Month</h3>
-            <p>₹{formData.salary.min}k - ₹{formData.salary.max}k </p>
+            <p>₹{formData.salary.min /1000}k - ₹{formData.salary.max /1000}k </p>
           </div>
           <Slider
             value={[formData.salary.min, formData.salary.max]}
             min={0}
-            max={1000000}
+            max={calculateMinMax().max}
             step={10000}
             onValueChange={([min, max]) => {
               setFormData((prev) => ({

@@ -31,7 +31,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const randomIndex = Math.floor(Math.random() * 3); // 0, 1, or 2
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
   };
 
   useEffect(()=>{
-      setFormData((prev) => ({...prev,image:imageArr[randomIndex]}));
+    setFormData((prev) => ({...prev,image:imageArr[randomIndex]}));
   },[])
 
   return (
@@ -135,13 +135,19 @@ export default function PopupHost({ onClose }: PopupHostProps) {
             {/* Location */}
             <label>
               Job Type
-              <input
+              <select
                 name="jobType"
-                placeholder="Full time"
                 value={formData.jobType}
                 onChange={handleChange}
-                className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
-              />
+                className="w-full border border-gray-300 focus:border-gray-900 p-2.5 mt-1 focus:outline-none rounded-lg"
+              >
+                <option value="" className="text-[#686868]">Job type</option>
+                <option value="Internship" className="text-black">Internship</option>
+                <option value="Full Time" className="text-black">Full Time</option>
+                <option value="Part Time" className="text-black">Part Time</option>
+                <option value="Contract" className="text-black">Contract</option>
+              </select>
+
               {errors.jobType && <span className="text-red-300 text-sm">{errors.jobType}</span>}
             </label>
             {/* Cars Count */}
@@ -191,17 +197,17 @@ export default function PopupHost({ onClose }: PopupHostProps) {
             </label>
             <label>
               Application Deadline
-                    <Flatpickr
-                      name="deadline"
-                      placeholder="deadline"
-                      options={{
-                        dateFormat: "D , j M ",
-                        plugins: [confirmDatePlugin({ showAlways: true, theme: "material_blue" })],
-                      }}
-                      value={formData.deadline}
-                      onChange={([date]) => setFormData({ ...formData, deadline: date })}
-                      className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
-                    />
+              <Flatpickr
+                name="deadline"
+                placeholder="deadline"
+                options={{
+                  dateFormat: "D , j M ",
+                  plugins: [confirmDatePlugin({ showAlways: true, theme: "material_blue" })],
+                }}
+                value={formData.deadline}
+                onChange={([date]) => setFormData({ ...formData, deadline: date })}
+                className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
+              />
               {errors.deadline && <span className="text-red-300 text-sm">{errors.deadline}</span>}
             </label>
 

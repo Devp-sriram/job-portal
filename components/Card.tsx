@@ -69,7 +69,7 @@ export default function Card({data}) {
             width={18}
             height={15}
           />
-          {Math.round(data.salary.max * 12/100000, 2)} LPA
+          {Math.round(data.salary.max * 12/100000, 2)} LPA{/*data.salary.min}-{data.salary.max*/}
         </div>
       </div>
 
