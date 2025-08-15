@@ -72,10 +72,10 @@ export default function PopupHost({ onClose }: PopupHostProps) {
     const newErrors = {};
     if (!formData.jobTitle) newErrors.jobTitle = "Enter the job title";
     if (!formData.companyName) newErrors.companyName = "Enter the company's Name";
-    if (!formData.location) newErrors.location = "Please enter your city or area";
-    if (!formData.jobType) newErrors.jobType = "what kind of job";
+    if (!formData.location) newErrors.location = "WFH or a metro politican city?";
+    if (!formData.jobType) newErrors.jobType = "what kind of job is it?";
     // if (!formData.salary || isNaN(formData.salary) || formData.salary < 1) newErrors.salary = "Enter how much salary are you willing to pay";
-    if (!formData.deadline) newErrors.deadline = "what kind of job";
+    if (!formData.deadline) newErrors.deadline = "Again what's the last day";
     if (!formData.description) newErrors.description = "Let us know more about your vehicles or preferences!";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -89,7 +89,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
 
     <div className="fixed inset-0 z-50 bg-black/60 flex p-4 md:p-6 flex-col gap-3 items-center justify-center">
       <div className="w-full flex flex-col md:flex-row max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl bg-white rounded-[20px] overflow-hidden shadow-2xl mx-auto">
-        <div className="w-full h-full py-6 px-4 sm:px-8 md:p-10 relative overflow-y-auto flex items-center rounded-lg">
+        <div className="w-full h-full py-6 px-4 sm:px-8 md:p-10 relative overflow-y-auto flex flex-col items-center rounded-lg">
           {/*
           <button
             className="hidden md:block absolute top-4 right-4 text-2xl font-bold text-gray-600 hover:text-gray-900"
@@ -97,40 +97,41 @@ export default function PopupHost({ onClose }: PopupHostProps) {
             ×
           </button>
           */}
+          <h1 className='text-2xl font-bold'>Create Job Opening</h1>
           <form onSubmit={handleSubmit} className="grid grid-cols-2 w-full mx-5 lg:mx-0 flex-col gap-6 xl:pt-6 text-black">
             <label>
               Job Title
               <input
                 name="jobTitle"
-                placeholder='enter the title'
+                placeholder='Enter the title'
                 value={formData.jobTitle}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 rounded-lg"
               />
-              {errors.jobTitle && <span className="text-red-300 text-sm">{errors.jobTitle}</span>}
+              {errors.jobTitle && <span className="text-red-400 text-sm">{errors.jobTitle}</span>}
             </label>
             <label>
               Company Name
               <input
                 name="companyName"
-                placeholder="enter your Company Name"
+                placeholder="Enter your Company Name"
                 value={formData.companyName}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
               />
-              {errors.companyName && <span className="text-red-300 text-sm">{errors.companyName}</span>}
+              {errors.companyName && <span className="text-red-400 text-sm">{errors.companyName}</span>}
             </label>
             {/* Email */}
             <label>
               Location
               <input
                 name="location"
-                placeholder='choose the location'
+                placeholder='Choose the location'
                 value={formData.location}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
               />
-              {errors.location && <span className="text-red-300 text-sm">{errors.location}</span>}
+              {errors.location && <span className="text-red-400 text-sm">{errors.location}</span>}
             </label>
             {/* Location */}
             <label>
@@ -148,7 +149,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
                 <option value="Contract" className="text-black">Contract</option>
               </select>
 
-              {errors.jobType && <span className="text-red-300 text-sm">{errors.jobType}</span>}
+              {errors.jobType && <span className="text-red-400 text-sm">{errors.jobType}</span>}
             </label>
             {/* Cars Count */}
             <label>
@@ -193,13 +194,12 @@ export default function PopupHost({ onClose }: PopupHostProps) {
                   />
                 </fieldset>
               </div>
-              {errors.salary && <span className="text-red-300 text-sm">{errors.salary}</span>}
+              {errors.salary && <span className="text-red-400 text-sm">{errors.salary}</span>}
             </label>
-            <label>
+            <label className='relative'>
               Application Deadline
               <Flatpickr
                 name="deadline"
-                placeholder="deadline"
                 options={{
                   dateFormat: "D , j M ",
                   plugins: [confirmDatePlugin({ showAlways: true, theme: "material_blue" })],
@@ -208,7 +208,15 @@ export default function PopupHost({ onClose }: PopupHostProps) {
                 onChange={([date]) => setFormData({ ...formData, deadline: date })}
                 className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
               />
-              {errors.deadline && <span className="text-red-300 text-sm">{errors.deadline}</span>}
+              <Image
+                src='/cal.svg'
+                alt ='.'
+                width={14}
+                height={14}
+                className='absolute top-10 right-3'
+              />
+
+              {errors.deadline && <span className="text-red-400 text-sm">{errors.deadline}</span>}
             </label>
 
             {/* Message */}
@@ -222,7 +230,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
               />
-              {errors.description && <span className="text-red-300 text-sm">{errors.description}</span>}
+              {errors.description && <span className="text-red-400 text-sm">{errors.description}</span>}
             </label>
             <div className='col-span-2 flex justify-between'>
 

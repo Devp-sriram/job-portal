@@ -33,7 +33,7 @@ export default function Card({data}) {
           width={66}
           height={66}
         />
-        <span className='h-fit rounded-lg bg-[#B0D9FF] p-2'>
+        <span className='h-fit rounded-lg bg-[#B0D9FF] p-2 text-sm'>
           {timeAgoShort(new Date(data.createdAt))} Ago
         </span>
       </div>
@@ -58,7 +58,7 @@ export default function Card({data}) {
             width={18}
             height={15}
           />
-          {data.location}
+          Onsite
         </div>
 
 

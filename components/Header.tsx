@@ -15,18 +15,26 @@ export default function Header(){
       />
 
       <nav className="hidden lg:flex px-14 gap-14">
-        <a href='#'>Home</a>
-        <a href='#'>Find Jobs</a>
-        <a href='#'>Find Talents</a>
-        <a href='#'>About us</a>
-        <a href='#'>Testimonials</a>
+        <a href='#' className='transition-all transform hover:translate-y-1'>Home</a>
+        <a href='#' className='transition-all transform hover:translate-y-1'>Find Jobs</a>
+        <a href='#' className='transition-all transform hover:translate-y-1'>Find Talents</a>
+        <a href='#' className='transition-all transform hover:translate-y-1'>About us</a>
+        <a href='#' className='transition-all transform hover:translate-y-1'>Testimonials</a>
       </nav>
 
       <button
-        onClick={()=>setShowPopup(true)}
-        className='text-white bg-gradient-to-r from-[#A128FF] to-[#6100AD] rounded-full px-4 p-2'
+        onClick={() => setShowPopup(true)}
+        className="group relative overflow-hidden text-white bg-gradient-to-r from-[#A128FF] to-[#6100AD] rounded-full px-4 p-2 transform transition-all duration-500 hover:scale-110"
       >
-        Create Jobs
+        {/* Default text */}
+        <span className="block transition-transform duration-500 ease-in-out group-hover:-translate-y-20">
+          Sign Up
+        </span>
+
+        {/* Hover text */}
+        <span className="absolute left-1/2 -translate-x-1/2 top-full block transition-transform duration-500 ease-in-out group-hover:-translate-y-8">
+          Login
+        </span>
       </button>
       {showPopup && <Popup onClose={()=>setShowPopup(false)}/>}
     </header>
