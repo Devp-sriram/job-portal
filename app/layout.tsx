@@ -4,7 +4,7 @@ import { JobProvider } from "@/context/JobContext";
 
 import "./globals.css";
 
-export const satoshi = localFont({
+const satoshi = localFont({
   src: '../public/fonts/Satoshi-Variable.woff2',
   variable: '--font-satoshi',
   weight: '100 900', // variable font range
