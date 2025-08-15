@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from 'next/font/local';
-
+import { JobProvider } from "@/context/JobContext";
 
 import "./globals.css";
 
@@ -26,7 +26,9 @@ export default function RootLayout({
       <body
         className={`${satoshi.className} antialiased`}
       >
-        {children}
+        <JobProvider>
+          {children}
+        </JobProvider>
       </body>
     </html>
   );

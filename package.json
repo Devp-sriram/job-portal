@@ -15,6 +15,7 @@
     "@types/react-flatpickr": "^3.8.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
     "flatpickr": "^4.6.13",
     "lucide-react": "^0.539.0",

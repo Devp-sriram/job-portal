@@ -11,9 +11,13 @@ export interface Job {
 }
 
 
-export default async function sendJob( formData : Job ) {
+export default async function sendJob( formData : Job , jobs: Job[], mutateJobs) {
 
   try {
+    
+    const optimisticJobs = [...jobs, formData];
+    mutateJobs(optimisticJobs, false);
+    
     const res = await fetch('/api/sendJob', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -21,10 +25,11 @@ export default async function sendJob( formData : Job ) {
     }); 
     if (!res.ok) throw new Error('Failed to submit');
 
-    mutate('/api/getJob');
+    mutateJobs();
     const data = await res.json();
     return { success: true, data };
   } catch (err) {
+    mutateJobs();
     console.error(err);
     return { success: false, error: err };
   }

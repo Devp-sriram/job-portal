@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import sendJobs from '@/utils/sendJobs'
+import { useJobs } from "@/context/JobContext";
 
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
@@ -13,6 +14,8 @@ type PopupHostProps = {
   onClose: () => void;
 };
 
+const imageArr = ['./amazon.svg','./tesla.svg','./swiggy.svg']
+
 export default function PopupHost({ onClose }: PopupHostProps) {
   const [formData, setFormData] = useState<HostForm>({
     jobTitle: "",
@@ -21,11 +24,15 @@ export default function PopupHost({ onClose }: PopupHostProps) {
     jobType:"",
     salary: {min:0,max:0}, 
     deadline:"",
-    description: "", 
+    description: "",
+    image:''
   });
+  const { jobs, mutateJobs } = useJobs();
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState<boolean>(false);
+  
+  const randomIndex = Math.floor(Math.random() * 3); // 0, 1, or 2
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,7 +46,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
     e.preventDefault();
     if (validate()) {
       setLoading(true);
-      const result = await sendJobs(formData);
+      const result = await sendJobs(formData ,jobs , mutateJobs);
       if (result.success) {
         setFormData({
           jobTitle: "",
@@ -48,10 +55,12 @@ export default function PopupHost({ onClose }: PopupHostProps) {
           jobType:"",
           salary: {min:0,max:0}, 
           deadline:"",
-          description: "", 
+          description: "",
+          image:''
         });
 
-        setLoading(false); 
+        setLoading(false);
+        onClose()
       } else {
         setLoading(false);
         console.error('Submission failed:', result.error);
@@ -72,18 +81,22 @@ export default function PopupHost({ onClose }: PopupHostProps) {
     return Object.keys(newErrors).length === 0;
   };
 
+  useEffect(()=>{
+      setFormData((prev) => ({...prev,image:imageArr[randomIndex]}));
+  },[])
 
   return (
 
     <div className="fixed inset-0 z-50 bg-black/60 flex p-4 md:p-6 flex-col gap-3 items-center justify-center">
       <div className="w-full flex flex-col md:flex-row max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl bg-white rounded-[20px] overflow-hidden shadow-2xl mx-auto">
         <div className="w-full h-full py-6 px-4 sm:px-8 md:p-10 relative overflow-y-auto flex items-center rounded-lg">
+          {/*
           <button
-            onClick={onClose}
             className="hidden md:block absolute top-4 right-4 text-2xl font-bold text-gray-600 hover:text-gray-900"
           >
             ×
           </button>
+          */}
           <form onSubmit={handleSubmit} className="grid grid-cols-2 w-full mx-5 lg:mx-0 flex-col gap-6 xl:pt-6 text-black">
             <label>
               Job Title
@@ -92,7 +105,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
                 placeholder='enter the title'
                 value={formData.jobTitle}
                 onChange={handleChange}
-                className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 focus:outline-none rounded-lg"
+                className="w-full border border-gray-300 focus:border-gray-900 p-2 mt-1 rounded-lg"
               />
               {errors.jobTitle && <span className="text-red-300 text-sm">{errors.jobTitle}</span>}
             </label>

@@ -8,7 +8,8 @@ export interface Ijob extends Document {
     jobType:string,
     salary: {min: number,max: number}, 
     deadline: Date,
-    description: string, 
+    description: string,
+    image : string
 }
 
 const JobsSchema = new Schema<Ijob>(
@@ -20,6 +21,7 @@ const JobsSchema = new Schema<Ijob>(
     salary: {min: Number,max: Number}, 
     deadline: Date,
     description: String, 
+    image : String
 
   },
   { collection: 'jobs',timestamps: true }
