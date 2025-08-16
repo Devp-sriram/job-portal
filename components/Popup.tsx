@@ -97,7 +97,7 @@ export default function PopupHost({ onClose }: PopupHostProps) {
             ×
           </button>
           */}
-          <h1 className='text-2xl font-bold'>Create Job Opening</h1>
+          <h1 className='text-2xl font-bold mb-4'>Create Job Opening</h1>
           <form onSubmit={handleSubmit} className="grid grid-cols-2 w-full mx-5 lg:mx-0 flex-col gap-6 xl:pt-6 text-black">
             <label>
               Job Title
